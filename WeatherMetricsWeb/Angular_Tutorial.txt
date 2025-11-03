@@ -318,6 +318,8 @@ Development
 
 #32
 
+Deployment
+
 
 https://codebuckets.com/2018/05/26/hosting-angular-in-iis-under-an-existing-website/
 
@@ -331,7 +333,7 @@ provide(APP_BASE_HREF, { useValue: '/' }),
 
 ng build --configuration=production  --base-href /WeatherMetricsDataApplication/
 
-Local Install
+Local Install to IIS
 
 Issues with installing as Application under IIS Site.
 
@@ -359,6 +361,7 @@ Issues with installing as Application under IIS Site.
         </httpErrors>
   </system.webServer>
 </configuration>
+
 
 
 Azure Static Web Application Install with GitHub Workflows
@@ -398,9 +401,9 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/WeatherMetricsWeb" # App source code path
+          app_location: "/WeatherMetricsWeb" # App source code path, this needed to be edited!
           api_location: "" # Api source code path - optional
-          output_location: "/dist/weather-metrics-web/browser" # Built app content directory - optional
+          output_location: "/dist/weather-metrics-web/browser" # Built app content directory - optional, this needed to be edited!
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

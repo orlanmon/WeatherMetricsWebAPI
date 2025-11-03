@@ -17,5 +17,9 @@ public partial class WeatherMetricsLog
 
     public string? WindDirection { get; set; }
 
+    public string? City { get; set; }
+
+    public string? State { get; set; }
+
     public DateTime? EntryDate { get; set; }
 }
