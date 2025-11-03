@@ -18,7 +18,7 @@ import { DatePipe} from "@angular/common";
 })
 export class WeathermetricsdatalistComponent {
 
-  displayedColumns: string[] = ['WeatherMetricsLogId', 'BarometricPressure', 'Humidity', 'TemperatureCelsius', 'WindSpeed', 'WindDirection', 'EntryDate', 'Actions'];
+  displayedColumns: string[] = ['WeatherMetricsLogId', 'BarometricPressure', 'Humidity', 'TemperatureCelsius', 'WindSpeed', 'WindDirection', 'City', 'State', 'EntryDate', 'Actions'];
 
   private weathermetricsdataServ: WeathermetricsdataService;
 

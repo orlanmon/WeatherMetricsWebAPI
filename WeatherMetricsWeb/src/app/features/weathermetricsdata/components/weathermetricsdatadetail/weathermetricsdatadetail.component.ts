@@ -30,7 +30,7 @@ export class WeathermetricsdatadetailComponent {
 
       if(this.isAddMode) {
 
-        this.weatherMetricsLog = new WeatherMetricsLog(0,0,0,0,0,'', new Date());
+        this.weatherMetricsLog = new WeatherMetricsLog(0,0,0,0,0,'', '', '', new Date());
 
         // Pull Form Data into Model
         this.weatherMetricsLog.barometricPressure = this.webForm.get('barometricPressure')?.value;
@@ -38,7 +38,8 @@ export class WeathermetricsdatadetailComponent {
         this.weatherMetricsLog.temperatureCelsius = this.webForm.get('temperatureCelsius')?.value;
         this.weatherMetricsLog.windDirection = this.webForm.get('windDirection')?.value;
         this.weatherMetricsLog.windSpeed = this.webForm.get('windSpeed')?.value;
-        
+        this.weatherMetricsLog.city = this.webForm.get('city')?.value;
+        this.weatherMetricsLog.state = this.webForm.get('state')?.value;
 
         this.weathermetricsdataServ.insertWeatherMetricLog(this.weatherMetricsLog).subscribe(result => {
         if (result.statusCode == 200) {
@@ -64,7 +65,8 @@ export class WeathermetricsdatadetailComponent {
         this.weatherMetricsLog.temperatureCelsius = this.webForm.get('temperatureCelsius')?.value;
         this.weatherMetricsLog.windDirection = this.webForm.get('windDirection')?.value;
         this.weatherMetricsLog.windSpeed = this.webForm.get('windSpeed')?.value;
-
+        this.weatherMetricsLog.city = this.webForm.get('city')?.value;
+        this.weatherMetricsLog.state = this.webForm.get('state')?.value;  
 
           this.weathermetricsdataServ.updateWeatherMetricLog(this.weatherMetricsLog).subscribe(result => {
         if (result.statusCode == 200) {
@@ -108,6 +110,8 @@ export class WeathermetricsdatadetailComponent {
         temperatureCelsius: new FormControl(Number,Validators.required),
         windSpeed: new FormControl(Number,Validators.required),
         windDirection: new FormControl('', Validators.required),
+        city: new FormControl('', Validators.required),
+        state: new FormControl('', Validators.required),
       }
     );
         

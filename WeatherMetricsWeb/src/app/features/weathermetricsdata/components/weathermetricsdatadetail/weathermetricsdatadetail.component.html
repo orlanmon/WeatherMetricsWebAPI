@@ -46,6 +46,22 @@
     </div>
   </div>
 
+  <div class="form-group mb-3 col-md-3">
+    <label for="city" class="form-label">City:</label>
+    <input id="city" type="text" formControlName="city" class="form-control">
+    <div *ngIf="webForm.get('city')?.invalid && webForm.get('city')?.touched" class="error-message">
+      Wind Direction is required.
+    </div>
+  </div>
+
+  <div class="form-group mb-3 col-md-3">
+    <label for="state" class="form-label">State:</label>
+    <input id="state" type="text" formControlName="state" class="form-control">
+    <div *ngIf="webForm.get('state')?.invalid && webForm.get('state')?.touched" class="error-message">
+      Wind Direction is required.
+    </div>
+  </div>
+
   <div class="row"> 
   <div class="col-md-2">
   <button type="submit" class="btn btn-primary" (click)="onReturn();" >Return</button>

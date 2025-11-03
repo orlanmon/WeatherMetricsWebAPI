@@ -45,6 +45,18 @@
     <td mat-cell *matCellDef="let element"> {{element.windDirection}} </td>
   </ng-container>
 
+<!-- Column -->
+  <ng-container matColumnDef="City">
+    <th mat-header-cell *matHeaderCellDef>City</th>
+    <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+  </ng-container>
+
+<!-- Column -->
+  <ng-container matColumnDef="State">
+    <th mat-header-cell *matHeaderCellDef>State</th>
+    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+  </ng-container>
+
   <!-- Column -->
   <ng-container matColumnDef="EntryDate">
     <th mat-header-cell *matHeaderCellDef> Entry Date </th>
