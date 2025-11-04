@@ -134,6 +134,8 @@ export class WeathermetricsdatadetailComponent {
                 temperatureCelsius: this.weatherMetricsLog.temperatureCelsius,
                 windSpeed: this.weatherMetricsLog.windSpeed,
                 windDirection: this.weatherMetricsLog.windDirection,
+                city: this.weatherMetricsLog.city,
+                state: this.weatherMetricsLog.state
 
               }
 

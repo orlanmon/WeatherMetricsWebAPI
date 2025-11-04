@@ -4,9 +4,9 @@
 <form [formGroup]="webForm" (ngSubmit)="onSubmit()" class="form">
 
 <h3>Weather Metric Log</h3>
-<div class="containerborder">
+<div class="containerborder col-md-6">
 
-<div class="form-group mb-3 col-md-3">
+<div class="form-group mb-3 col-md-4">
     <label for="barometricPressure">Barometric Pressure:</label>
     <input id="barometricPressure" type="number" formControlName="barometricPressure" class="form-control" >
     <div *ngIf="webForm.get('barometricPressure')?.invalid && webForm.get('barometricPressure')?.touched" class="error-message">
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-<div class="form-group mb-3 col-md-3">
+<div class="form-group mb-3 col-md-4">
     <label for="humidity" class="form-label" >Humidity:</label>
     <input id="humidity" type="number" formControlName="humidity" class="form-control">
     <div *ngIf="webForm.get('humidity')?.invalid && webForm.get('humidity')?.touched" class="error-message">
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-<div class="form-group mb-3 col-md-3">
+<div class="form-group mb-3 col-md-4">
     <label for="temperatureCelsius" class="form-label" >Temperature in Celsius:</label>
     <input id="temperatureCelsius" type="number" formControlName="temperatureCelsius" class="form-control">
     <div *ngIf="webForm.get('temperatureCelsius')?.invalid && webForm.get('temperatureCelsius')?.touched" class="error-message">
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-    <div class="form-group mb-3 col-md-3">
+    <div class="form-group mb-3 col-md-4">
     <label for="windSpeed" class="form-label">Wind Speed:</label>
     <input id="windSpeed" type="number" formControlName="windSpeed" class="form-control">
     <div *ngIf="webForm.get('windSpeed')?.invalid && webForm.get('windSpeed')?.touched" class="error-message">
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-    <div class="form-group mb-3 col-md-3">
+    <div class="form-group mb-3 col-md-4">
     <label for="windDirection" class="form-label">Wind Direction:</label>
     <input id="windDirection" type="text" formControlName="windDirection" class="form-control">
     <div *ngIf="webForm.get('windDirection')?.invalid && webForm.get('windDirection')?.touched" class="error-message">
@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <div class="form-group mb-3 col-md-3">
+  <div class="form-group mb-3 col-md-4">
     <label for="city" class="form-label">City:</label>
     <input id="city" type="text" formControlName="city" class="form-control">
     <div *ngIf="webForm.get('city')?.invalid && webForm.get('city')?.touched" class="error-message">
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div class="form-group mb-3 col-md-3">
+  <div class="form-group mb-3 col-md-4">
     <label for="state" class="form-label">State:</label>
     <input id="state" type="text" formControlName="state" class="form-control">
     <div *ngIf="webForm.get('state')?.invalid && webForm.get('state')?.touched" class="error-message">

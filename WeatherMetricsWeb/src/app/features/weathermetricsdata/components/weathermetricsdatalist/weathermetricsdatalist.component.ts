@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { WeatherMetricsLog } from '../../../../models/weathermetricslog.model';
@@ -8,25 +8,38 @@ import { MatDialog, MatDialogContent } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 import { DatePipe} from "@angular/common";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-weathermetricsdatalist',
-  imports: [MatTableModule, MatIconModule, DatePipe],
+  imports: [MatTableModule, MatIconModule, DatePipe, MatPaginator],
   templateUrl: './weathermetricsdatalist.component.html',
   styleUrl: './weathermetricsdatalist.component.css',
   providers: [WeathermetricsdataService],
 })
-export class WeathermetricsdatalistComponent {
+export class WeathermetricsdatalistComponent implements AfterViewInit {
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
+
+  pageSize : number = 5;
 
   displayedColumns: string[] = ['WeatherMetricsLogId', 'BarometricPressure', 'Humidity', 'TemperatureCelsius', 'WindSpeed', 'WindDirection', 'City', 'State', 'EntryDate', 'Actions'];
 
   private weathermetricsdataServ: WeathermetricsdataService;
 
   public weathermetricsData: WeatherMetricsLog[] = [];
+  public dataSource : MatTableDataSource<WeatherMetricsLog> | null;
+  
+  
 
   constructor(private weathermetricsdataService: WeathermetricsdataService, public dialog: MatDialog, private router: Router) {
 
     this.weathermetricsdataServ = weathermetricsdataService;
+
+    this.dataSource = new MatTableDataSource<WeatherMetricsLog>([]);
 
   }
 
@@ -34,7 +47,26 @@ export class WeathermetricsdatalistComponent {
     
     this.LoadWeatherMetricsData();
 
+    
+
   }
+
+ ngAfterViewInit() {
+        // Ensure paginator is assigned after view is initialized and data is loaded
+        /*
+        if( this.dataSource) {
+          this.dataSource.data = this.weathermetricsData;
+
+          if(this.paginator != null ) {
+
+            this.dataSource.paginator = this.paginator;
+
+          }
+
+        }
+          */
+
+ }
 
 
   onAdd() {
@@ -51,6 +83,20 @@ this.weathermetricsdataServ.getWeatherMetricLogsAll()
         if (result.statusCode == 200) {
           
           this.weathermetricsData = result.data!;
+
+
+           if( this.dataSource) {
+          this.dataSource.data = this.weathermetricsData;
+
+          if(this.paginator != null ) {
+
+            this.dataSource.paginator = this.paginator;
+
+          }
+
+        }
+
+
 
           //console.log(this.weathermetricsData);
 
