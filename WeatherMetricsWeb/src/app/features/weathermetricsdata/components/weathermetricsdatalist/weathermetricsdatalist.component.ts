@@ -11,11 +11,14 @@ import { DatePipe} from "@angular/common";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @Component({
   selector: 'app-weathermetricsdatalist',
-  imports: [MatTableModule, MatIconModule, DatePipe, MatPaginator],
+  imports: [MatTableModule, MatIconModule, DatePipe, MatPaginator,MatSort,MatSortModule, MatPaginatorModule],
   templateUrl: './weathermetricsdatalist.component.html',
   styleUrl: './weathermetricsdatalist.component.css',
   providers: [WeathermetricsdataService],
@@ -23,10 +26,11 @@ import { ViewChild } from '@angular/core';
 export class WeathermetricsdatalistComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | undefined;
+  @ViewChild(MatSort, {static: false}) sort!: MatSort 
 
   pageSize : number = 5;
 
-  displayedColumns: string[] = ['WeatherMetricsLogId', 'BarometricPressure', 'Humidity', 'TemperatureCelsius', 'WindSpeed', 'WindDirection', 'City', 'State', 'EntryDate', 'Actions'];
+  displayedColumns: string[] = ['weatherMetricsLogId', 'BarometricPressure', 'Humidity', 'TemperatureCelsius', 'WindSpeed', 'WindDirection', 'City', 'State', 'EntryDate', 'Actions'];
 
   private weathermetricsdataServ: WeathermetricsdataService;
 
@@ -53,18 +57,15 @@ export class WeathermetricsdatalistComponent implements AfterViewInit {
 
  ngAfterViewInit() {
         // Ensure paginator is assigned after view is initialized and data is loaded
+        
         /*
         if( this.dataSource) {
-          this.dataSource.data = this.weathermetricsData;
 
-          if(this.paginator != null ) {
-
-            this.dataSource.paginator = this.paginator;
-
-          }
+          this.dataSource.sort = this.sort;
 
         }
-          */
+        */
+
 
  }
 
@@ -88,16 +89,22 @@ this.weathermetricsdataServ.getWeatherMetricLogsAll()
            if( this.dataSource) {
           this.dataSource.data = this.weathermetricsData;
 
+
+          this.dataSource.sort = this.sort;
+
+
           if(this.paginator != null ) {
 
             this.dataSource.paginator = this.paginator;
 
           }
 
+          
+
+
         }
 
-
-
+        
           //console.log(this.weathermetricsData);
 
         } else {
