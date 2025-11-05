@@ -1,8 +1,11 @@
-<div class="container containerborder">
+<div class="container">
+
+<div class="containerborder">
 
 <div class="row">
 
-    <div class="mb-3 col-md-4">
+    
+    <div class="mb-3 col-md">
         <label for="selectDevice" class="mb-3">Select Weather Metrics Device</label>
 
         <select class="form-select" aria-label="Select Weather Metrics Device" (change)="onDeviceSelectionChange($event);">
@@ -16,9 +19,10 @@
 
 </div>
 
+
 <div class="row">
 
-     <div class="mb-3 col-md-4">
+     <div class="mb-3 col-md">
     <label for="deviceUptime">Weather Metrics Device Uptime</label>
     <input id="deviceUptime" type="text" class="form-control" readonly value="{{this.strIoTDeviceUptime}}" >
     </div>
@@ -26,15 +30,17 @@
 </div>
 
 <div class="row">
-     <div class="mb-3 col-md-4">
+     <div class="mb-3 col-md">
 
         <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary b-3" (click)="onEnable();" [disabled]="(isEnabled)"  >Enable</button>&nbsp;
-        <button type="submit" class="btn btn-primary b-3" (click)="onDisable();" [disabled]="(!isEnabled)" >Disable</button>
+        <button type="submit" class="btn btn-primary" (click)="onEnable();" [disabled]="(isEnabled)"  >Enable</button>&nbsp;
+        <button type="submit" class="btn btn-primary" (click)="onDisable();" [disabled]="(!isEnabled)" >Disable</button>
         </div>
 
      </div>
      
 </div>
 
+    
+</div>
 </div>
