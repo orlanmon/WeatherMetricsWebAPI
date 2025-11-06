@@ -12,7 +12,8 @@ export class WeathermetricsdevicesComponent {
 
 private weathermetricsdevicesServ : WeathermetricsdevicesService;
 isEnabled? : boolean;
-strIoTDevice? : string;
+loggingInterval : number = 0;
+strIoTDeviceID? : string;
 strIoTDeviceUptime? : string;
 
 
@@ -25,15 +26,16 @@ constructor(private weathermetricsdevicesService : WeathermetricsdevicesService 
 
  ngOnInit() {
 
-  
+    // Populate IoT Device Selection From IoT Hub
+
+    // weathermetricsdevicesService
+    
+
   }
 
   onEnable() {
 
-    // this.weathermetricsdevicesServ
-
-
-    console.log("Weather Metrics Device Enable")
+    console.log("Weather Metrics Device Enable");
 
     this.isEnabled = true;
 
@@ -41,9 +43,7 @@ constructor(private weathermetricsdevicesService : WeathermetricsdevicesService 
 
   onDisable() {
 
-    // this.weathermetricsdevicesServ
-
-    console.log("Weather Metrics Device Disable")
+    console.log("Weather Metrics Device Disable");
 
     this.isEnabled = false;
 
@@ -51,11 +51,40 @@ constructor(private weathermetricsdevicesService : WeathermetricsdevicesService 
 
   onDeviceSelectionChange(event: Event) {
 
-    console.log("Weather Metrics Device Change")
+    console.log("Weather Metrics Device Selection Change");
+
+
+    this.strIoTDeviceID = (event.target as HTMLInputElement).value;
+
+    // weathermetricsdevicesService
 
     // Query Device Status
 
     // Update UI For Device Status
+
+  }
+
+  onLoggingIntervalSelectionChange(event: Event) {
+
+    console.log("Device Logging Interval Change");
+
+    if ( (event.target as HTMLInputElement).value != "0") {
+
+      this.loggingInterval = Number((event.target as HTMLInputElement).value);
+      
+    }
+
+  }
+
+
+  onDeviceUpdate(){
+
+    console.log("Device Update");
+
+    // Update Device Logging Interval, & Enable Disable Status
+
+    // weathermetricsdevicesService
+
 
   }
 
