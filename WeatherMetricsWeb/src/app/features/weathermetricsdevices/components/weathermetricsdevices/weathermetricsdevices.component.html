@@ -23,10 +23,10 @@
 
     
     <div class="mb-3 col-md">
-        <label for="selectLoggingInterval" class="mb-3">Select Weather Metrics Device</label>
+        <label for="selectLoggingInterval" class="mb-3">Select Device Logging Interval</label>
 
         <select class="form-select" aria-label="Device Logging Interval" id="selectLoggingInterval" (change)="onLoggingIntervalSelectionChange($event);">
-        <option selected>Select a Device Logging Interval</option>
+        <option selected>Select Device Logging Interval</option>
         <option value="5">5 Min</option>
         <option value="10">10 Min</option>
         <option value="20">20 Min</option>
@@ -42,7 +42,7 @@
 <div class="row">
 
      <div class="mb-3 col-md">
-    <label for="deviceUptime">Weather Metrics Device Uptime</label>
+    <label for="deviceUptime">Device Uptime</label>
     <input id="deviceUptime" type="text" class="form-control" readonly value="{{this.strIoTDeviceUptime}}" >
     </div>
 
@@ -52,8 +52,8 @@
 
  <div class="mb-3 col-md">
 
-    <button type="submit" class="btn btn-primary" (click)="onEnable();" [disabled]="(isEnabled)"  >Enable</button>&nbsp;
-    <button type="submit" class="btn btn-primary" (click)="onDisable();" [disabled]="(!isEnabled)" >Disable</button>
+    <button type="submit" class="btn btn-primary" (click)="onEnable();" [disabled]="(isEnabled)"  >Enable Device</button>&nbsp;
+    <button type="submit" class="btn btn-primary" (click)="onDisable();" [disabled]="(!isEnabled)" >Disable Device</button>
     
 
  </div>
