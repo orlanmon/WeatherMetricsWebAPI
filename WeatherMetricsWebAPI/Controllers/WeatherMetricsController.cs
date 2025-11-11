@@ -14,15 +14,14 @@ namespace WeatherMetricsWebAPI.Controllers
        
         private readonly ILogger<WeatherMetricsController> _logger;
         private readonly IWeatherMetricsDataService _WeatherMetricsDataService;
-        private readonly IConfiguration _configuration;
         private readonly IWeatherMetricsDataService _weatherMetricsDataService;
 
 
-        public WeatherMetricsController(ILogger<WeatherMetricsController> logger, IWeatherMetricsDataService weatherMetricsDataService, IConfiguration configuration)
+        public WeatherMetricsController(ILogger<WeatherMetricsController> logger, IWeatherMetricsDataService weatherMetricsDataService)
         {
             _logger = logger;
             _WeatherMetricsDataService = weatherMetricsDataService;
-            _configuration = configuration;
+            
             _weatherMetricsDataService = weatherMetricsDataService;
 
         }

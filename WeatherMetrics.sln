@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMetricsModel", "Weat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMetricsDTO", "WeatherMetricsDTO\WeatherMetricsDTO.csproj", "{F84135AA-F383-4542-BF1C-ED90E4F7BCD6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMetricsUnitTest", "WeatherMetricsUnitTest\WeatherMetricsUnitTest.csproj", "{88999DEE-A5E5-46CE-9C3D-7A0695D25162}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F84135AA-F383-4542-BF1C-ED90E4F7BCD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F84135AA-F383-4542-BF1C-ED90E4F7BCD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F84135AA-F383-4542-BF1C-ED90E4F7BCD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

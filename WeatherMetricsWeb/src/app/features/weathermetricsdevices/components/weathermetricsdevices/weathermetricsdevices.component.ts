@@ -13,7 +13,7 @@ export class WeathermetricsdevicesComponent {
 private weathermetricsdevicesServ : WeathermetricsdevicesService;
 isEnabled? : boolean;
 loggingInterval : number = 0;
-strIoTDeviceID? : string;
+strIoTDeviceID? : string = "";
 strIoTDeviceUptime? : string;
 
 
@@ -68,7 +68,7 @@ constructor(private weathermetricsdevicesService : WeathermetricsdevicesService 
 
     console.log("Device Logging Interval Change");
 
-    if ( (event.target as HTMLInputElement).value != "0") {
+    if ( (event.target as HTMLInputElement).value != "") {
 
       this.loggingInterval = Number((event.target as HTMLInputElement).value);
       
