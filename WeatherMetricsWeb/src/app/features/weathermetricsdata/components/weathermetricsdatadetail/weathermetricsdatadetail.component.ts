@@ -20,6 +20,8 @@ export class WeathermetricsdatadetailComponent {
    isAddMode? : boolean
    webForm!: FormGroup;
    weatherMetricsLog! : WeatherMetricsLog;
+   strDialogName? : string;
+
 
 
    constructor(private route: ActivatedRoute, private weathermetricsdataServ: WeathermetricsdataService, private router: Router, public dialog: MatDialog) {
@@ -99,10 +101,11 @@ export class WeathermetricsdatadetailComponent {
     
     if( id.length === 0 ) {
       this.isAddMode = true;
+      this.strDialogName = "Add Weather Metric Log";
     } else {
       this.isAddMode = false;
+      this.strDialogName = "Edit Weather Metric Log";
     }
-
 
     this.webForm = new FormGroup(
       { barometricPressure: new FormControl(Number, Validators.required),

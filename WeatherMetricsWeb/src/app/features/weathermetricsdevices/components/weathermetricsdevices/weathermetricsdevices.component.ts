@@ -15,6 +15,7 @@ isEnabled? : boolean;
 loggingInterval : number = 0;
 strIoTDeviceID? : string = "";
 strIoTDeviceUptime? : string;
+strIoTDeviceStatus? : string;
 
 
 constructor(private weathermetricsdevicesService : WeathermetricsdevicesService ) {
@@ -27,6 +28,8 @@ constructor(private weathermetricsdevicesService : WeathermetricsdevicesService 
  ngOnInit() {
 
     // Populate IoT Device Selection From IoT Hub
+
+    this.strIoTDeviceID = ""; 
 
     // weathermetricsdevicesService
     

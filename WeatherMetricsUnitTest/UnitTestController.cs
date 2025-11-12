@@ -28,13 +28,6 @@ namespace WeatherMetricsUnitTest
         }
 
 
-        // get productlist
-        // get productbyid
-        // post addproduct
-        // put updateproduct
-        // delete deleteproduct
-
-
         [Fact]
         public void GetWeatherMetricsData_WeatherMetricsLogDTOList()
         {
