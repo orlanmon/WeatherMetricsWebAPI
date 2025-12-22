@@ -26,12 +26,19 @@ Server=tcp:monacos-sql.database.windows.net,1433;Initial Catalog=WeatherMetricsD
 
 
 
-// Deployment of Web Service as Azue App Service
+// Deployment of Web Service as Azure App Service
 
 DEV Slot
 
 https://weathermetricswebapi-dev-b8g6a2ecfbewhxcu.canadaeast-01.azurewebsites.net/swagger/index.html
 
 
+
+
+
+// Deployment of Web Service to Azure App Service with Azure DevOps
+
+
+https://dev.azure.com/monacos
 
 
