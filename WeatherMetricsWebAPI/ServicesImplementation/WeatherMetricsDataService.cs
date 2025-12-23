@@ -16,6 +16,11 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
 
             _dBConnectionString = dBConnectionString;
 
+
+            // Configure AutoMapper For Model to DTOs 
+            AutoMapperConfiguration.Configure();
+
+
             _objAutoMapper = AutoMapperConfiguration.AutoMapperConfig.CreateMapper();
 
         }

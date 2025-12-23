@@ -123,7 +123,7 @@ namespace WeatherMetricsWebAPI
 
 
             // Configure AutoMapper For Model to DTOs 
-            AutoMapperConfiguration.Configure();
+            // AutoMapperConfiguration.Configure();
 
 
             app.Run();

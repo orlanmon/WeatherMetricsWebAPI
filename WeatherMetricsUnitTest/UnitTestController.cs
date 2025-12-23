@@ -1,80 +1,65 @@
-﻿using Moq;
-using WeatherMetricsWebAPI.Controllers;
+﻿using WeatherMetricsWebAPI.Controllers;
 using WeatherMetricsWebAPI.ServicesImplementation;
 using WeatherMetricsDTO.DTO;
 using WeatherMetricsModel.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace WeatherMetricsUnitTest
-
 {
-    public class UnitTestController
+
+
+
+
+
+    public class Startup
     {
 
-        private readonly Mock<IWeatherMetricsDataService> _weatherMetricsDataService;
-
-        public UnitTestController() {
-
-
-            _weatherMetricsDataService = new Mock<IWeatherMetricsDataService>();
-
-
-
-
-
-        }
-
-
-        [Fact]
-        public void GetWeatherMetricsData_WeatherMetricsLogDTOList()
+        public class UnitTestController
         {
 
-            List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = GetWeatherMetricsLogDTOData();
+            readonly IWeatherMetricsDataService? _weatherMetricsDataService;
+
+
+            public UnitTestController()
+            {
+
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+                IConfiguration configuration = builder.Build();
+
+                string? dBConnectionString = configuration.GetConnectionString("DBConnection");
+
+
+                this._weatherMetricsDataService = new WeatherMetricsDataService(dBConnectionString);
+
+            }
+
+
+            [Fact]
+            public void GetWeatherMetricsData_WeatherMetricsLogDTOList()
+            {
+
+
+                IEnumerable<WeatherMetricsLogDTO> weatherMetricsLogDTOs = _weatherMetricsDataService.GetWeatherMetricsData();
+
+
+                Assert.NotNull(weatherMetricsLogDTOs);
 
 
 
 
-            _weatherMetricsDataService.Setup( x => x.GetWeatherMetricsData()).Returns(weatherMetricsLogDTOs);
+            }
 
+            private List<WeatherMetricsLogDTO> GetWeatherMetricsLogDTOData()
+            {
 
-            var mockLogger = new Mock<ILogger<WeatherMetricsController>>();
-
-
-            // Inject Mock IWeatherMetricsDataService Service Into Controller
-            var weatherMetricsController = new WeatherMetricsController(mockLogger.Object, _weatherMetricsDataService.Object);
-
-           
-            IActionResult weatherMetricsDataServiceResult = weatherMetricsController.GetWeatherMetricsAll();
-            
-            OkObjectResult? okResult = weatherMetricsDataServiceResult as OkObjectResult;
-
-            List<WeatherMetricsLogDTO>? weatherMetricsDTOResultArray = okResult.Value as List<WeatherMetricsLogDTO>;
-
-
-
-
-            Assert.NotNull(weatherMetricsDTOResultArray);
-            Assert.Equal(GetWeatherMetricsLogDTOData().Count(), weatherMetricsDTOResultArray.Count());
-
-
-
-
-        }
-
-        public void GetWeatherMetricsDataByID_WeatherMetricsLogDTO()
-        {
-
-
-        }
-
-
-        private List<WeatherMetricsLogDTO> GetWeatherMetricsLogDTOData()
-        {
-
-            List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>()
+                List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>()
             {
 
                 new WeatherMetricsLogDTO { WeatherMetricsLogId = 0,
@@ -107,11 +92,12 @@ namespace WeatherMetricsUnitTest
                 }
             };
 
-            return weatherMetricsLogDTOs;
+                return weatherMetricsLogDTOs;
+
+            }
+
+
 
         }
-
-
-
     }
 }

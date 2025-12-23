@@ -5,7 +5,11 @@ https://www.c-sharpcorner.com/blogs/implementation-of-unit-test-using-xunit-and-
 
 Nuget Console
 
-Install-Package Moq
+Install-Package Moq - don't know how to use as of yet.
 
 Create  Xunit project
+
+
+Install-Package Xunit.Microsoft.DependencyInjection
+
 
