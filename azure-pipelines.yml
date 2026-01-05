@@ -1,14 +1,4 @@
 # ASP.NET Core (.NET Framework)
-- task: AzureRmWebAppDeployment@5
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Pay-As-You-Go(0dc78152-04ff-4995-9813-29db62f1aab2)'
-    appType: 'webApp'
-    WebAppName: 'WeatherMetricsWebAPI'
-    deployToSlotOrASE: true
-    ResourceGroupName: 'monacosenterprise'
-    SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
@@ -42,3 +32,15 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: AzureRmWebAppDeployment@5
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go(0dc78152-04ff-4995-9813-29db62f1aab2)'
+    appType: 'webApp'
+    WebAppName: 'WeatherMetricsWebAPI'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'monacosenterprise'
+    SlotName: 'production'
+    packageForLinux: '$(build.artifactStagingDirectory)\WebApp.zip'
+    #packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    
