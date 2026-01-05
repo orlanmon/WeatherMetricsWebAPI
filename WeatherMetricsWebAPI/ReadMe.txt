@@ -23,16 +23,16 @@ Server=tcp:monacos-sql.database.windows.net,1433;Initial Catalog=WeatherMetricsD
 
 
 
-
-
-
 // Deployment of Web Service as Azure App Service
 
-DEV Slot
+DEV Slot URI
 
 https://weathermetricswebapi-dev-b8g6a2ecfbewhxcu.canadaeast-01.azurewebsites.net/swagger/index.html
 
 
+Default Production Slot URI ( slot created automaically )
+
+https://weathermetricswebapi-e4gvgrg3g3cncgd7.canadaeast-01.azurewebsites.net/swagger/index.html
 
 
 

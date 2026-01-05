@@ -1,9 +1,0 @@
-.footer {
-  background-color: black !important;
-  color: white !important;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 40px;
-}
