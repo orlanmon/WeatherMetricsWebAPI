@@ -42,3 +42,65 @@ https://weathermetricswebapi-e4gvgrg3g3cncgd7.canadaeast-01.azurewebsites.net/sw
 https://dev.azure.com/monacos
 
 
+
+// YAML
+
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+- task: AzureRmWebAppDeployment@5
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go(0dc78152-04ff-4995-9813-29db62f1aab2)'
+    appType: 'webApp'
+    WebAppName: 'WeatherMetricsWebAPI'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'monacosenterprise'
+    SlotName: 'production'
+    packageForLinux: '$(build.artifactStagingDirectory)\WebApp.zip'
+    #packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+
+    //  Azure DevOps Steps
+
+
+    #1 - Create Project 
+
+    MonacosWeatherMetricsWebAPI
+
+    #2 - Create Pipeline
+
+
+    Select Code Source
+
