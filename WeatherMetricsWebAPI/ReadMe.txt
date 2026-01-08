@@ -14,6 +14,11 @@ Install-Package Swashbuckle.AspNetCore -Version 6.6.2
 
 Install-Package Microsoft.AspNetCore.Cors
 
+!!!!Also remember to Configure the Azure App Service For the Proper CORS Domain Information!!!
+
+App Service -> API - CORS  -> Allowed Origins
+
+
 
 //  Azure SQL Server Database
 
@@ -23,7 +28,7 @@ Server=tcp:monacos-sql.database.windows.net,1433;Initial Catalog=WeatherMetricsD
 
 
 
-// Deployment of Web Service as Azure App Service
+// Deployment of Web Service as Azure App Service 
 
 DEV Slot URI
 
