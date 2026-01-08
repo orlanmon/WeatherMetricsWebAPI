@@ -99,8 +99,18 @@ steps:
 
     MonacosWeatherMetricsWebAPI
 
-    #2 - Create Pipeline
+    #2 - Create Pipeline  - Select Code Source
+
+    #3 - Create Pipeline  - Select ASP.NET Core (.NET Framework) -.  Generate pipeline YAML.
+
+    #4   Add PipeLine YAML Deployment to App Service - Show Assitant(left hand side)
+
+         App Service Type -  Web App on Windows
+         App Service Name -  WeatherMetricsWebAPI
+         Deploy to Slot or App Service Environment - Resource Group - monacosenterprise, Slot - Production
+         Package of Folder - $(build.artifactStagingDirectory)\WebApp.zip
 
 
-    Select Code Source
+
+
 
