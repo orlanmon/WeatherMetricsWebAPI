@@ -37,10 +37,16 @@ namespace WeatherMetricsWebAPI.Controllers
 
                 weatherMetricsLogID = _weatherMetricsDataService.InsertWeatherMetricsData(weatherMetricsLogDTO);
 
+                _logger.LogInformation("WeatherMetricsController::InsertWeatherMetricsData Success");
+
+
                 return Ok(weatherMetricsLogID);
 
             }
             catch (Exception ex) {
+
+                _logger.LogError("WeatherMetricsController::InsertWeatherMetricsData Failed: {0}", ex.Message );
+
 
                 return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
 
@@ -63,11 +69,17 @@ namespace WeatherMetricsWebAPI.Controllers
                 _weatherMetricsDataService.UpdateWeatherMetricsData(weatherMetricsLogDTO);
 
 
+                _logger.LogInformation("WeatherMetricsController::UpdateWeatherMetricsData Success");
+
+
                 return Ok();
 
             }
             catch (Exception ex)
             {
+
+                _logger.LogError("WeatherMetricsController::UpdateWeatherMetricsData Failed: {0}", ex.Message);
+
 
                 return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
 
@@ -90,14 +102,18 @@ namespace WeatherMetricsWebAPI.Controllers
             try
             {
 
-                _weatherMetricsDataService.DeleteWeatherMetricsData(weatherMetricsLogID);    
+                _weatherMetricsDataService.DeleteWeatherMetricsData(weatherMetricsLogID);
 
+                _logger.LogInformation("WeatherMetricsController::Delete Success");
 
                 return Ok();
 
             }
             catch (Exception ex)
             {
+
+
+                _logger.LogError("WeatherMetricsController::Delete Failed: {0}", ex.Message);
 
                 return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
 
@@ -127,11 +143,16 @@ namespace WeatherMetricsWebAPI.Controllers
                 weatherMetricsLogDTO = _weatherMetricsDataService.GetWeatherMetricsData(weatherMetricsLogID);
 
 
+                _logger.LogInformation("WeatherMetricsController::GetWeatherMetricsData Success");
+
+
                 return Ok(weatherMetricsLogDTO);
 
             }
             catch (Exception ex)
             {
+
+                _logger.LogError("WeatherMetricsController::GetWeatherMetricsData Failed: {0}", ex.Message);
 
                 return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
 
@@ -156,7 +177,10 @@ namespace WeatherMetricsWebAPI.Controllers
             try
             {
                 
-                weatherMetricsLogDTOs = _weatherMetricsDataService.GetWeatherMetricsData(startDate, endDate);    
+                weatherMetricsLogDTOs = _weatherMetricsDataService.GetWeatherMetricsData(startDate, endDate);
+
+                _logger.LogInformation("WeatherMetricsController::GetWeatherMetricsDataRange Success");
+
 
 
                 return Ok(weatherMetricsLogDTOs);
@@ -164,6 +188,9 @@ namespace WeatherMetricsWebAPI.Controllers
             }
             catch (Exception ex)
             {
+
+                _logger.LogError("WeatherMetricsController::GetWeatherMetricsDataRange Failed: {0}", ex.Message);
+
 
                 return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
 
@@ -190,11 +217,18 @@ namespace WeatherMetricsWebAPI.Controllers
                 weatherMetricsLogDTOs = _weatherMetricsDataService.GetWeatherMetricsData();
 
 
+                _logger.LogInformation("WeatherMetricsController::GetWeatherMetricsAll Success");
+
+
+
                 return Ok(weatherMetricsLogDTOs);
 
             }
             catch (Exception ex)
             {
+
+                _logger.LogError("WeatherMetricsController::GetWeatherMetricsAll Failed: {0}", ex.Message);
+
 
                 return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
 

@@ -27,6 +27,20 @@ Server=tcp:monacos-sql.database.windows.net,1433;Initial Catalog=WeatherMetricsD
 
 
 
+// Add Logging File For Logging
+
+// Side Note Splunk would be the perfect Option in a Large Enterprise 
+
+// Azure App Services logging
+
+Microsoft.Extensions.Logging.AzureAppServices
+
+
+
+
+
+
+
 
 // Deployment of Web Service as Azure App Service 
 

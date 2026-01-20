@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using WeatherMetricsDTO;
 using WeatherMetricsWebAPI.ServicesImplementation;
+using Microsoft.Extensions.Logging.AzureAppServices;
+
 
 namespace WeatherMetricsWebAPI
 {
@@ -96,6 +98,20 @@ namespace WeatherMetricsWebAPI
 
 
 
+            // Logging
+
+            builder.Services.AddLogging(loggingbuilder =>
+
+                loggingbuilder.ClearProviders()
+
+
+            );
+
+
+            // Azure Logging Enabled
+            builder.Logging.AddAzureWebAppDiagnostics();
+
+           
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
