@@ -35,8 +35,13 @@ Server=tcp:monacos-sql.database.windows.net,1433;Initial Catalog=WeatherMetricsD
 
 Microsoft.Extensions.Logging.AzureAppServices
 
+For the logs to appear in Azure, you must enable the "Application Logging" setting in your App Service. 
 
+Navigate to your App Service in the Azure portal.
+Under the Monitoring section in the left menu, select App Service logs.
+Toggle Application Logging (Filesystem) to On (this is for temporary debugging and lasts 12 hours) or enable Application Logging (Blob) for long-term storage, specifying a storage account.
 
+You can then view the logs in real-time by selecting the Log stream option under Monitoring in the Azure portal. 
 
 
 
