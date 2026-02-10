@@ -26,6 +26,9 @@ namespace WeatherMetricsWebAPI.Controllers
 
         }
 
+
+
+
         [ActionName("Insert")]
         [HttpPost("api/[controller]/[action]")]
         public IActionResult InsertWeatherMetricsData([FromBody]  WeatherMetricsLogDTO weatherMetricsLogDTO) {
@@ -239,6 +242,39 @@ namespace WeatherMetricsWebAPI.Controllers
             }
 
         }
+
+
+        [ActionName("GetAPIVersion")]
+        [HttpGet("api/[controller]/[action]")]
+        public IActionResult GetAPIVersion()
+        {
+
+            try
+            {
+
+                float webAPIVersion = 1.0f;
+
+                return Ok(webAPIVersion);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError("WeatherMetricsController::GetAPIVersion Failed: {0}", ex.Message);
+
+
+                return StatusCode(500, "An unexpected server error occurred. " + ex.Message);
+
+            }
+            finally
+            {
+
+            }
+
+        }
+
+
+
 
     }
 }

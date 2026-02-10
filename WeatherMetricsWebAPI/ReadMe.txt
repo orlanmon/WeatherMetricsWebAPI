@@ -16,7 +16,7 @@ Install-Package Microsoft.AspNetCore.Cors
 
 !!!!Also remember to Configure the Azure App Service For the Proper CORS Domain Information!!!
 
-App Service -> API - CORS  -> Allowed Origins
+Azure: App Service -> API -> CORS  -> Allowed Origins
 
 
 
@@ -64,6 +64,7 @@ https://weathermetricswebapi-e4gvgrg3g3cncgd7.canadaeast-01.azurewebsites.net/sw
 
 
 https://dev.azure.com/monacos
+
 
 
 
