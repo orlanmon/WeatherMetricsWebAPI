@@ -252,7 +252,7 @@ namespace WeatherMetricsWebAPI.Controllers
             try
             {
 
-                float webAPIVersion = 2.1f;
+                float webAPIVersion = 2.2f;
 
                 return Ok(webAPIVersion);
 
