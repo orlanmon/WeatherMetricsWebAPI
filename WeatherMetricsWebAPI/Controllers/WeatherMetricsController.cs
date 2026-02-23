@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using WeatherMetricsDTO.DTO;
 using WeatherMetricsModel.Models;
 using WeatherMetricsWebAPI.ServicesImplementation;
@@ -11,18 +12,20 @@ namespace WeatherMetricsWebAPI.Controllers
     //[Route("api/[controller]/[action]")]
     public class WeatherMetricsController : ControllerBase
     {
-       
+
         private readonly ILogger<WeatherMetricsController> _logger;
-        private readonly IWeatherMetricsDataService _WeatherMetricsDataService;
         private readonly IWeatherMetricsDataService _weatherMetricsDataService;
+        private readonly IConfiguration _configuration;
 
 
-        public WeatherMetricsController(ILogger<WeatherMetricsController> logger, IWeatherMetricsDataService weatherMetricsDataService)
+        public WeatherMetricsController(ILogger<WeatherMetricsController> logger, IWeatherMetricsDataService weatherMetricsDataService, IConfiguration configuration)
         {
             _logger = logger;
-            _WeatherMetricsDataService = weatherMetricsDataService;
             
             _weatherMetricsDataService = weatherMetricsDataService;
+
+            _configuration = configuration;
+
 
         }
 
@@ -248,11 +251,11 @@ namespace WeatherMetricsWebAPI.Controllers
         [HttpGet("api/[controller]/[action]")]
         public IActionResult GetAPIVersion()
         {
-
             try
             {
 
-                float webAPIVersion = 2.2f;
+                float webAPIVersion =  ( _configuration["AppSettings:WebAPIVersion"] != null ?  float.Parse(_configuration["AppSettings:WebAPIVersion"]) : 1.0f );
+
 
                 return Ok(webAPIVersion);
 
