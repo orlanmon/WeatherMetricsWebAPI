@@ -134,7 +134,7 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
             {
 
                 List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>();
-                IEnumerable<WeatherMetricsLog>?weatherMetricsLogReturn = null;
+                IQueryable<WeatherMetricsLog>?weatherMetricsLogReturn = null;
 
 
 
@@ -166,7 +166,7 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
             {
 
                 List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>();
-                IEnumerable<WeatherMetricsLog>? weatherMetricsLogReturn = null;
+                IQueryable<WeatherMetricsLog>? weatherMetricsLogReturn = null;
 
 
                 weatherMetricsLogReturn = weatherMetricsDbContext.WeatherMetricsLogs.OrderByDescending(wml => wml.WeatherMetricsLogId); 
