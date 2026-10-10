@@ -22,6 +22,10 @@ Azure: App Service -> API -> CORS  -> Allowed Origins
 
 //  Azure SQL Server Database
 
+Logical SQL Server with an Azure SQL Database
+
+
+
 // Connection String
 Server=tcp:monacos-sql.database.windows.net,1433;Initial Catalog=WeatherMetricsData;Persist Security Info=False;User ID=orlanmon;Password=GoWestYoungMan_1973;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 
@@ -117,7 +121,18 @@ steps:
     #packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 
+
+
+
+
+
+
+
+
+
+
     //  Azure DevOps Steps
+
 
 
     #1 - Create Project 

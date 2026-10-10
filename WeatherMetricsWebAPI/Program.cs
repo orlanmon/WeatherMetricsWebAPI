@@ -133,6 +133,7 @@ namespace WeatherMetricsWebAPI
             app.MapControllers(); // Maps attribute-routed controllers
 
 
+            // Use CORS Policy
             app.UseCors("SpecificOriginsPolicy");
 
 
