@@ -32,7 +32,6 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
 - task: AzureRmWebAppDeployment@5
   inputs:
     ConnectionType: 'AzureRM'
@@ -43,3 +42,4 @@ steps:
     ResourceGroupName: 'monacosenterprise'
     SlotName: 'production'
     packageForLinux: '$(build.artifactStagingDirectory)\WebApp.zip'
+    #packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
