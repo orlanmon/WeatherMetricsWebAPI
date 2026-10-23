@@ -45,7 +45,6 @@ namespace WeatherMetricsWebAPI.Controllers
 
                 _logger.LogInformation("WeatherMetricsController::InsertWeatherMetricsData Success");
 
-
                 return Ok(weatherMetricsLogID);
 
             }

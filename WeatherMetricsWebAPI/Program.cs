@@ -1,9 +1,13 @@
 
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using WeatherMetricsDTO;
 using WeatherMetricsWebAPI.ServicesImplementation;
-using Microsoft.Extensions.Logging.AzureAppServices;
+using AzureKeyVaultUtilities;
+
 
 
 namespace WeatherMetricsWebAPI
@@ -33,8 +37,14 @@ namespace WeatherMetricsWebAPI
 
             builder.Services.AddScoped<IWeatherMetricsDataService>(provider =>
             {
-                
-                string? dBConnectionString = configuration.GetConnectionString("DBConnection");
+
+                // string? dBConnectionString = configuration.GetConnectionString("DBConnection"
+
+
+                // Offload the async work to the thread pool and safely block until it finishes
+                string? dBConnectionString = Task.Run(async () => await KeyVaultUtil.GetKeyVaultDatabaseConnection(configuration)).GetAwaiter().GetResult();
+
+
                 //string? dBConnectionString = _configuration["ConnectionStrings:DBConnection"];
 
 
@@ -145,5 +155,10 @@ namespace WeatherMetricsWebAPI
 
             app.Run();
         }
+
+
+       
+
+
     }
 }

@@ -1,0 +1,158 @@
+﻿An Azure Key Vault acts as a secure digital safe in the cloud to store secrets (like API keys), keys (for encryption), and certificates.
+Here is the quickest, plain-and-simple way to set it up using the Azure Portal.
+
+Step 1: Create the Key Vault
+1.	
+o	Log in to the Azure Portal.
+o	In the search bar at the top, type Key vaults and select it.
+o	Click + Create.
+o	Fill in the Basics tab:
+	Subscription & Resource Group: Select your active subscription and an existing resource group (or click Create new).
+	Key vault name: Enter a unique name (e.g., my-secure-vault-123).
+	Region: Choose a region close to your applications (e.g., East US).
+	Pricing tier: Select Standard (this is perfect for 95% of basic use cases).
+o	Click Review + create, then click Create after validation passes.
+
+Step 2: Choose How to Grant Access (Access Policy vs. RBAC)
+By default, Azure applies Azure Role-Based Access Control (Azure RBAC) to new vaults. This is the modern, recommended approach.
+To give yourself or an application permission to read secrets:
+1.	
+o	Go to your new Key Vault resource.
+o	Click Access control (IAM) in the left menu.
+o	Click + Add -> Add role assignment.
+o	Select the Key Vault Secrets Officer role (if you need to add/delete secrets) or Key Vault Secrets User (if an app just needs to read them), then click Next.
+
+	Key Vault Secrets Officer - key vault management (if you need to add/delete secrets)  Entra ID user
+	Key Vault Secrets User - application identity ( come back to add when you register the application)  serviceprincipal for App Service
+
+o	Select Members, click + Select members, find your account (or your app's managed identity), and select it.
+o	Click Review + assign.
+
+Step 3: Add a Secret
+1.	
+o	Inside your Key Vault, click Secrets under the Objects section in the left menu.
+o	Click + Generate/Import.
+o	Set Upload options to Manual.
+o	Give your secret a Name (e.g., AppDbConnectionString).
+o	Type your sensitive data into the Secret value field.
+o	Click Create.
+Your secret is now encrypted and securely stored. You can click on the secret name and the current version to view the Secret Identifier (URL), which your applications will use to fetch the value programmatically.
+
+monacos_monacos.us#EXT#@monacosmonacos.onmicrosoft.com
+
+
+/* General Notes */
+
+An Azure Service Principal is a non-human identity created in Microsoft Entra ID that allows applications, hosted services, and automated tools to securely access and manage Azure resources
+
+App Object vs. Service Principal: When you register an application in Entra ID, Two Things Happend:
+
+#1 Global app object is created as the blueprint. 
+#2 A service principal is then created in each specific tenant where the app operates to define what the app can actually do and who can access it
+
+
+// Application and service principal objects in Microsoft Entra ID
+https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser
+
+
+Register an Application in Entra
+
+When you perform an App Registration in the Azure Portal, Microsoft Entra ID automatically creates both objects in your home tenant
+
+
+Creates a Microsoft Entra application object
+
+The application object describes three aspects of an application:
+
+How the service can issue tokens in order to access the application
+The resources that the application might need to access
+The actions that the application can take
+
+• Think of the Application Object as the central blueprint and engineering design for a specific model of a tractor. 
+There is only one master blueprint file at the manufacturing plant.
+
+• Think of the Service Principal as an actual, physical tractor rolling off the assembly line.
+It gets its own unique VIN (Service Principal Object ID), a specific owner, and permission to drive on certain fields.
+If you sell that model of tractor to three different farms (tenants), each farm gets its own physical tractor (Service Principal)
+but they all still share the same original blueprint design.
+
+
+
+
+// Application Registration ( Managed identity )
+
+
+Option 1: Register Automatically via App Service Authentication (Recommended)
+
+1. Sign in to the Azure Portal and go to your app.
+2. Navigate to Settings > Authentication and click Add identity provider.
+3. Choose Microsoft, select your tenant configuration (Workforce or External), and select Create new app registration.
+4. Provide a Name, select Supported account types, configure any required authentication actions, and click Add.
+
+Option 2: Register Manually in Microsoft Entra ID
+
+1. Sign in to the Microsoft Entra Admin Center or Azure portal and go to Microsoft Entra ID > App registrations > New registration.
+2. Enter a Name, select the matching Supported account types, and click Register.
+3. Copy the Application (client) ID and Directory (tenant) ID from the Overview page.
+4. Optionally, create a Client secret under Certificates & secrets or configure API permissions as needed.
+
+
+// Now Programatically How to Access Key Vault
+
+
+1. Install the NuGet Packages
+
+Open your terminal or Package Manager Console and install the required packages:
+bash
+# Core package for authenticating with Azure Active Directory / Entra ID
+dotnet add package Azure.Identity
+
+# Package specifically for managing Key Vault secrets 
+dotnet add package Azure.Security.KeyVault.Secrets
+
+
+
+
+2. Implement the C# Code
+
+You can use the following standard implementation to initialize a SecretClient and retrieve a secret:
+csharp
+using System;
+using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        // Replace with your actual Azure Key Vault URI (e.g., https://my-vault.vault.azure.net/)
+        string vaultUrl = "https://<your-key-vault-name>.vault.azure.net/";
+        string secretName = "MyDatabaseConnectionString";
+
+        try
+        {
+            // DefaultAzureCredential automatically searches for environment variables, 
+            // managed identities, or your IDE logged-in user (VS / Azure CLI) to authenticate.
+            var client = new SecretClient(new Uri(vaultUrl), new DefaultAzureCredential());
+
+            Console.WriteLine($"Retrieving secret '{secretName}' from {vaultUrl}...");
+            
+            // Asynchronously fetch the secret
+            KeyVaultSecret secret = await client.GetSecretAsync(secretName);
+
+            Console.WriteLine($"Your secret value is: {secret.Value}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving secret: {ex.Message}");
+        }
+    }
+}
+
+
+
+
+
+
+

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMetricsDTO", "Weathe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherMetricsUnitTest", "WeatherMetricsUnitTest\WeatherMetricsUnitTest.csproj", "{88999DEE-A5E5-46CE-9C3D-7A0695D25162}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureKeyVaultUtil", "KeyVaultUtil\AzureKeyVaultUtil.csproj", "{B75FE8EB-E97C-42D9-A3F0-DA40265B84D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +35,15 @@ Global
 		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88999DEE-A5E5-46CE-9C3D-7A0695D25162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B75FE8EB-E97C-42D9-A3F0-DA40265B84D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75FE8EB-E97C-42D9-A3F0-DA40265B84D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B75FE8EB-E97C-42D9-A3F0-DA40265B84D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B75FE8EB-E97C-42D9-A3F0-DA40265B84D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0558F9C9-9CDB-4D31-8457-F8198D232588}
 	EndGlobalSection
 EndGlobal

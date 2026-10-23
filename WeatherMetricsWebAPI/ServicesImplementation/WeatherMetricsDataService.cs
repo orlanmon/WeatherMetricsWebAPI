@@ -76,6 +76,7 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
                 if(weatherMetricsLogToUpdate != null)
                 {
 
+                    // Perform Update Using Automapper 
                     _objAutoMapper.Map(weatherMetricsLogDTO, weatherMetricsLogToUpdate);
 
                     weatherMetricsDbContext.SaveChanges();

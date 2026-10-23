@@ -58,16 +58,26 @@ DEV Slot URI
 https://weathermetricswebapi-dev-b8g6a2ecfbewhxcu.canadaeast-01.azurewebsites.net/swagger/index.html
 
 
+
 Default Production Slot URI ( slot created automaically )
 
 https://weathermetricswebapi-e4gvgrg3g3cncgd7.canadaeast-01.azurewebsites.net/swagger/index.html
 
 
 
+// Add Keyvault Support to App Service Using CLI
+
+
+https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal
+
+
 // Deployment of Web Service to Azure App Service with Azure DevOps
 
 
 https://dev.azure.com/monacos
+
+
+
 
 
 
