@@ -115,41 +115,8 @@ dotnet add package Azure.Security.KeyVault.Secrets
 
 2. Implement the C# Code
 
-You can use the following standard implementation to initialize a SecretClient and retrieve a secret:
-csharp
-using System;
-using System.Threading.Tasks;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 
-class Program
-{
-    static async Task Main(string[] args)
-    {
-        // Replace with your actual Azure Key Vault URI (e.g., https://my-vault.vault.azure.net/)
-        string vaultUrl = "https://<your-key-vault-name>.vault.azure.net/";
-        string secretName = "MyDatabaseConnectionString";
-
-        try
-        {
-            // DefaultAzureCredential automatically searches for environment variables, 
-            // managed identities, or your IDE logged-in user (VS / Azure CLI) to authenticate.
-            var client = new SecretClient(new Uri(vaultUrl), new DefaultAzureCredential());
-
-            Console.WriteLine($"Retrieving secret '{secretName}' from {vaultUrl}...");
-            
-            // Asynchronously fetch the secret
-            KeyVaultSecret secret = await client.GetSecretAsync(secretName);
-
-            Console.WriteLine($"Your secret value is: {secret.Value}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error retrieving secret: {ex.Message}");
-        }
-    }
-}
-
+please look at public static class KeyVaultUtil
 
 
 
