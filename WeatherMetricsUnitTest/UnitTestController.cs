@@ -1,11 +1,12 @@
-﻿using WeatherMetricsWebAPI.Controllers;
-using WeatherMetricsWebAPI.ServicesImplementation;
+﻿using AzureKeyVaultUtilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using WeatherMetricsDTO.DTO;
 using WeatherMetricsModel.Models;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+using WeatherMetricsWebAPI.Controllers;
+using WeatherMetricsWebAPI.ServicesImplementation;
 
 
 namespace WeatherMetricsUnitTest
@@ -33,7 +34,11 @@ namespace WeatherMetricsUnitTest
 
                 IConfiguration configuration = builder.Build();
 
-                string? dBConnectionString = configuration.GetConnectionString("DBConnection");
+                //string? dBConnectionString = configuration.GetConnectionString("DBConnection");
+
+                string? dBConnectionString = Task.Run(async () => await KeyVaultUtil.GetKeyVaultDatabaseConnection(configuration)).GetAwaiter().GetResult();
+
+
 
 
                 this._weatherMetricsDataService = new WeatherMetricsDataService(dBConnectionString);

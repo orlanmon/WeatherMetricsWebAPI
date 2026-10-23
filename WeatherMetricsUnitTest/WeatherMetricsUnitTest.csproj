@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KeyVaultUtil\AzureKeyVaultUtil.csproj" />
     <ProjectReference Include="..\WeatherMetricsDTO\WeatherMetricsDTO.csproj" />
     <ProjectReference Include="..\WeatherMetricsWebAPI\WeatherMetricsWebAPI.csproj" />
   </ItemGroup>
