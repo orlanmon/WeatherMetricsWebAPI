@@ -86,16 +86,21 @@ namespace WeatherMetricsUnitTest
 
                 var logger = NullLogger<WeatherMetricsController>.Instance;
 
-                // Build configuration using a physical JSON file
-                IConfiguration configuration = new ConfigurationBuilder()
-                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.test.json", optional: false, reloadOnChange: true)
-                    .Build();
+          
+                // 1. Create the mock configuration
+                var mockConfig = new Mock<IConfiguration>();
 
+
+
+                // 2. Setup the specific configuration key route
+                mockConfig.Setup(c => c["AppSettings:WebAPIVersion"]).Returns("2.0");
+
+
+        
 
                 // Inject the mock object (.Object) into the controller's constructor
 
-                var controller = new WeatherMetricsController(logger, mockService.Object, configuration);
+                        var controller = new WeatherMetricsController(logger, mockService.Object, mockConfig.Object);
 
                 List<WeatherMetricsLogDTO> weatherMetricsLogDTOResults = (List<WeatherMetricsLogDTO>)controller.GetWeatherMetricsAll();
 
