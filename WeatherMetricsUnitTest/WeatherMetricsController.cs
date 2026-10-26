@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using WeatherMetricsDTO.DTO;
 using WeatherMetricsModel.Models;
 using WeatherMetricsWebAPI.Controllers;
 using WeatherMetricsWebAPI.ServicesImplementation;
-using Microsoft.Extensions.Logging.Abstractions;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 
 namespace WeatherMetricsUnitTest
@@ -92,17 +93,21 @@ namespace WeatherMetricsUnitTest
 
 
 
-                // 2. Setup the specific configuration key route
+                // 2. Setup the specific configuration key route Mock
                 mockConfig.Setup(c => c["AppSettings:WebAPIVersion"]).Returns("2.0");
 
 
-        
-
                 // Inject the mock object (.Object) into the controller's constructor
 
-                        var controller = new WeatherMetricsController(logger, mockService.Object, mockConfig.Object);
+                var controller = new WeatherMetricsController(logger, mockService.Object, mockConfig.Object);
 
-                List<WeatherMetricsLogDTO> weatherMetricsLogDTOResults = (List<WeatherMetricsLogDTO>)controller.GetWeatherMetricsAll();
+                IActionResult actionResult = controller.GetWeatherMetricsAll();
+
+                var objectResult = actionResult as OkObjectResult;
+
+
+                IEnumerable<WeatherMetricsLogDTO>? weatherMetricsLogDTOResults = objectResult?.Value as IEnumerable<WeatherMetricsLogDTO>;
+
 
                 Assert.NotNull(weatherMetricsLogDTOResults);
 
