@@ -1,4 +1,20 @@
-﻿An Azure Key Vault acts as a secure digital safe in the cloud to store secrets (like API keys), keys (for encryption), and certificates.
+﻿
+Microsoft Entra ID is Microsoft's cloud-based identity and access management (IAM) service, formerly known as Azure Active Directory (Azure AD). Microsoft officially renamed Azure AD to Microsoft Entra ID in July 2023.
+
+
+Microsoft Entra ID - Identity and Access Management 
+
+
+Key Details
+
+• Core Purpose: Manages user identities, authentication, and authorization for cloud apps, Microsoft 365, Azure services, and third-party SaaS tools.
+• Free vs. Paid: A free edition is included with commercial online services like Azure, Microsoft 365, and Intune, offering basic user/group management and single sign-on (SSO). Paid tiers add advanced features like Conditional Access and Risk-Based Authentication.
+• Entra ID vs. Traditional AD: On-premises Active Directory manages local domain networks (computers and servers), whereas Microsoft Entra ID is built specifically for cloud-first and hybrid environments.
+Would you like to know more about Entra ID licensing tiers, how to sync on-premises Active Directory, or setting up Multi-Factor Authentication (MFA)?
+
+
+
+An Azure Key Vault acts as a secure digital safe in the cloud to store secrets (like API keys), keys (for encryption), and certificates.
 Here is the quickest, plain-and-simple way to set it up using the Azure Portal.
 
 Step 1: Create the Key Vault
@@ -38,7 +54,8 @@ o	Type your sensitive data into the Secret value field.
 o	Click Create.
 Your secret is now encrypted and securely stored. You can click on the secret name and the current version to view the Secret Identifier (URL), which your applications will use to fetch the value programmatically.
 
-monacos_monacos.us#EXT#@monacosmonacos.onmicrosoft.com
+
+NOTE:  You can have more than one Secret Per KeyVault!!
 
 
 /* General Notes */
@@ -120,6 +137,14 @@ please look at public static class KeyVaultUtil
 
 
 
+From an App Registration Two Things are created in Azure:
+
+Entra Application Object ->   View under App Registrations   (Shared Across Tenenants)
+
+The Application Object (The Blueprint): This is the global representation of your application across all tenants. It acts as a template or master definition containing the app's name, supported account types, redirect URIs, API permissions, and secrets/certificates. You view and manage this under App registrations.
 
 
 
+The Service Principal -> View under Enterprise applications  (Specific to Tenenant)
+
+The Service Principal (The Local Instance): This is the local identity or "instance" of that application inside a specific tenant. It defines what the app can actually do in that directory, who can access it, and which roles or resource permissions are assigned to it. You view and manage this under Enterprise applications
