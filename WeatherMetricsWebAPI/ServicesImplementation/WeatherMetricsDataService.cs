@@ -2,6 +2,7 @@
 using WeatherMetricsModel.Models;
 using System.Linq;
 using WeatherMetricsDTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace WeatherMetricsWebAPI.ServicesImplementation
 {
@@ -25,7 +26,7 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
 
         }
 
-        public Int64 InsertWeatherMetricsData(WeatherMetricsLogDTO weatherMetricsLogDTO)
+        public async Task<Int64> InsertWeatherMetricsData(WeatherMetricsLogDTO weatherMetricsLogDTO)
         {
 
             using (WeatherMetricsDbContext weatherMetricsDbContext = new WeatherMetricsDbContext(_dBConnectionString))
@@ -44,15 +45,17 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
                 weatherMetricsLog = _objAutoMapper.Map<WeatherMetricsLogDTO, WeatherMetricsLog>(weatherMetricsLogDTO);
 
 
-                weatherMetricsDbContext.WeatherMetricsLogs.Add(weatherMetricsLog);
+                await weatherMetricsDbContext.WeatherMetricsLogs.AddAsync(weatherMetricsLog);
 
-                weatherMetricsDbContext.SaveChanges();
+
+                await weatherMetricsDbContext.SaveChangesAsync();
+
 
                 return weatherMetricsLog.WeatherMetricsLogId;
             }
         }
 
-        public void UpdateWeatherMetricsData(WeatherMetricsLogDTO weatherMetricsLogDTO) {
+        public async Task UpdateWeatherMetricsData(WeatherMetricsLogDTO weatherMetricsLogDTO) {
 
             using (WeatherMetricsDbContext weatherMetricsDbContext = new WeatherMetricsDbContext(_dBConnectionString))
             {
@@ -70,7 +73,7 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
 
                 weatherMetricsLog = _objAutoMapper.Map<WeatherMetricsLogDTO, WeatherMetricsLog>(weatherMetricsLogDTO);
 
-                weatherMetricsLogToUpdate = weatherMetricsDbContext.WeatherMetricsLogs.FirstOrDefault(weatherMetricsLog => weatherMetricsLog.WeatherMetricsLogId == weatherMetricsLogDTO.WeatherMetricsLogId);
+                weatherMetricsLogToUpdate = await weatherMetricsDbContext.WeatherMetricsLogs.FirstOrDefaultAsync(weatherMetricsLog => weatherMetricsLog.WeatherMetricsLogId == weatherMetricsLogDTO.WeatherMetricsLogId);
 
 
                 if(weatherMetricsLogToUpdate != null)
@@ -79,44 +82,45 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
                     // Perform Update Using Automapper 
                     _objAutoMapper.Map(weatherMetricsLogDTO, weatherMetricsLogToUpdate);
 
-                    weatherMetricsDbContext.SaveChanges();
+                    await weatherMetricsDbContext.SaveChangesAsync();
                 }
 
             }
         }
 
-        public void DeleteWeatherMetricsData(Int64 weatherMetricsLogID) {
+        public async Task DeleteWeatherMetricsData(Int64 weatherMetricsLogID) {
 
             using (WeatherMetricsDbContext weatherMetricsDbContext = new WeatherMetricsDbContext(_dBConnectionString))
             {
 
                 WeatherMetricsLog? weatherMetricsLogToDelete;
                 
-                weatherMetricsLogToDelete = weatherMetricsDbContext.WeatherMetricsLogs.FirstOrDefault(weatherMetricsLog => weatherMetricsLog.WeatherMetricsLogId == weatherMetricsLogID);
+                weatherMetricsLogToDelete = await weatherMetricsDbContext.WeatherMetricsLogs.FirstOrDefaultAsync(weatherMetricsLog => weatherMetricsLog.WeatherMetricsLogId == weatherMetricsLogID);
 
 
                 if (weatherMetricsLogToDelete != null)
                 {
 
-                    weatherMetricsDbContext.WeatherMetricsLogs.Remove  (weatherMetricsLogToDelete);
+                    weatherMetricsDbContext.WeatherMetricsLogs.Remove(weatherMetricsLogToDelete);
 
-                    weatherMetricsDbContext.SaveChanges();
+                    await weatherMetricsDbContext.SaveChangesAsync();
+
                 }
 
             }
 
         }
 
-        public WeatherMetricsLogDTO GetWeatherMetricsData(Int64 weatherMetricsLogID) {
+        public async  Task<WeatherMetricsLogDTO?> GetWeatherMetricsData(Int64 weatherMetricsLogID) {
 
             using (WeatherMetricsDbContext weatherMetricsDbContext = new WeatherMetricsDbContext(_dBConnectionString))
             {
 
                 WeatherMetricsLogDTO? weatherMetricsLogDTOReturn = null;
 
-                WeatherMetricsLog weatherMetricsLogReturn;
+                WeatherMetricsLog? weatherMetricsLogReturn;
 
-                weatherMetricsLogReturn = weatherMetricsDbContext.WeatherMetricsLogs.FirstOrDefault(weatherMetricsLog => weatherMetricsLog.WeatherMetricsLogId == weatherMetricsLogID);
+                weatherMetricsLogReturn = await weatherMetricsDbContext.WeatherMetricsLogs.FirstOrDefaultAsync(weatherMetricsLog => weatherMetricsLog.WeatherMetricsLogId == weatherMetricsLogID);
 
                 if (weatherMetricsLogReturn != null)
                 {
@@ -129,26 +133,27 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
 
         }
 
-        public IEnumerable<WeatherMetricsLogDTO> GetWeatherMetricsData(DateTime startDate, DateTime endDate) {
+        public async Task<IEnumerable<WeatherMetricsLogDTO>> GetWeatherMetricsData(DateTime startDate, DateTime endDate) {
 
             using (WeatherMetricsDbContext weatherMetricsDbContext = new WeatherMetricsDbContext(_dBConnectionString))
             {
 
                 List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>();
-                IQueryable<WeatherMetricsLog>?weatherMetricsLogReturn = null;
+                //IQueryable<WeatherMetricsLog>?weatherMetricsLogReturn = null;
+                List< WeatherMetricsLog >? weatherMetricsLogReturn = null;
 
-
-
-                weatherMetricsLogReturn = weatherMetricsDbContext.WeatherMetricsLogs.Where(weatherMetricsLog => (weatherMetricsLog.EntryDate >= startDate && weatherMetricsLog.EntryDate <= endDate) );
+                // Note: Where Clause Does not actually execute it only modifies the  I/O query expression Tree
+                // That will be used to create the Underlying SQL 
+                // [ LINQ Query ] ---> [ Expression Tree ] ---> [ EF Core Provider ] ---> [ SQL Generated ]
+                // await only happens on the ToListAsync when the results are converted back to a generic collection
+                weatherMetricsLogReturn = await weatherMetricsDbContext.WeatherMetricsLogs.Where(weatherMetricsLog => (weatherMetricsLog.EntryDate >= startDate && weatherMetricsLog.EntryDate <= endDate)).ToListAsync<WeatherMetricsLog>();
 
                 if (weatherMetricsLogReturn != null) {
-
 
                     foreach (WeatherMetricsLog weatherMetricsLog in weatherMetricsLogReturn)
                     {
 
                         weatherMetricsLogDTOs.Add(_objAutoMapper.Map<WeatherMetricsLog, WeatherMetricsLogDTO>(weatherMetricsLog));
-
 
                     }
 
@@ -159,18 +164,19 @@ namespace WeatherMetricsWebAPI.ServicesImplementation
 
         }
 
-
-        public IEnumerable<WeatherMetricsLogDTO> GetWeatherMetricsData()
+        public async Task<IEnumerable<WeatherMetricsLogDTO>> GetWeatherMetricsData()
         {
 
             using (WeatherMetricsDbContext weatherMetricsDbContext = new WeatherMetricsDbContext(_dBConnectionString))
             {
 
                 List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>();
-                IQueryable<WeatherMetricsLog>? weatherMetricsLogReturn = null;
+                //IQueryable<WeatherMetricsLog>? weatherMetricsLogReturn = null;
+                List<WeatherMetricsLog>? weatherMetricsLogReturn = null;
 
 
-                weatherMetricsLogReturn = weatherMetricsDbContext.WeatherMetricsLogs.OrderByDescending(wml => wml.WeatherMetricsLogId); 
+                weatherMetricsLogReturn = await weatherMetricsDbContext.WeatherMetricsLogs.OrderByDescending(wml => wml.WeatherMetricsLogId).ToListAsync<WeatherMetricsLog>();
+
 
                 if (weatherMetricsLogReturn != null)
                 {

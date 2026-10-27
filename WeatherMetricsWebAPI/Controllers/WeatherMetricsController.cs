@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using WeatherMetricsDTO.DTO;
 using WeatherMetricsModel.Models;
 using WeatherMetricsWebAPI.ServicesImplementation;
+using System.Threading.Tasks;
+
 
 
 namespace WeatherMetricsWebAPI.Controllers
@@ -34,14 +36,14 @@ namespace WeatherMetricsWebAPI.Controllers
 
         [ActionName("Insert")]
         [HttpPost("api/[controller]/[action]")]
-        public IActionResult InsertWeatherMetricsData([FromBody]  WeatherMetricsLogDTO weatherMetricsLogDTO) {
+        public async Task<ActionResult<long>> InsertWeatherMetricsData([FromBody]  WeatherMetricsLogDTO weatherMetricsLogDTO) {
 
             Int64? weatherMetricsLogID = null;
 
             try
             {
 
-                weatherMetricsLogID = _weatherMetricsDataService.InsertWeatherMetricsData(weatherMetricsLogDTO);
+                weatherMetricsLogID = await _weatherMetricsDataService.InsertWeatherMetricsData(weatherMetricsLogDTO);
 
                 _logger.LogInformation("WeatherMetricsController::InsertWeatherMetricsData Success");
 
@@ -65,13 +67,13 @@ namespace WeatherMetricsWebAPI.Controllers
 
         [ActionName("Update")]
         [HttpPost("api/[controller]/[action]")]
-        public IActionResult UpdateWeatherMetricsData([FromBody]  WeatherMetricsLogDTO weatherMetricsLogDTO) {
+        public async Task<ActionResult> UpdateWeatherMetricsData([FromBody]  WeatherMetricsLogDTO weatherMetricsLogDTO) {
 
           
             try
             {
 
-                _weatherMetricsDataService.UpdateWeatherMetricsData(weatherMetricsLogDTO);
+                await _weatherMetricsDataService.UpdateWeatherMetricsData(weatherMetricsLogDTO);
 
 
                 _logger.LogInformation("WeatherMetricsController::UpdateWeatherMetricsData Success");
@@ -101,13 +103,14 @@ namespace WeatherMetricsWebAPI.Controllers
 
         [ActionName("Delete")]
         [HttpDelete("api/[controller]/[action]/{weatherMetricsLogID}")]
-        public IActionResult Delete(Int64 weatherMetricsLogID) {
+        public async Task<ActionResult> Delete(Int64 weatherMetricsLogID) {
 
            
             try
             {
 
-                _weatherMetricsDataService.DeleteWeatherMetricsData(weatherMetricsLogID);
+                await _weatherMetricsDataService.DeleteWeatherMetricsData(weatherMetricsLogID);
+
 
                 _logger.LogInformation("WeatherMetricsController::Delete Success");
 
@@ -135,17 +138,16 @@ namespace WeatherMetricsWebAPI.Controllers
 
         [ActionName("Get")]
         [HttpGet("api/[controller]/[action]/{weatherMetricsLogID}")]
-        public IActionResult GetWeatherMetricsData(Int64 weatherMetricsLogID) {
+        public async Task<ActionResult<WeatherMetricsLogDTO>> GetWeatherMetricsData(Int64 weatherMetricsLogID) {
 
             WeatherMetricsLogDTO? weatherMetricsLogDTO = null;
            
-           
-
+          
             try
             {
                
 
-                weatherMetricsLogDTO = _weatherMetricsDataService.GetWeatherMetricsData(weatherMetricsLogID);
+                weatherMetricsLogDTO = await _weatherMetricsDataService.GetWeatherMetricsData(weatherMetricsLogID);
 
 
                 _logger.LogInformation("WeatherMetricsController::GetWeatherMetricsData Success");
@@ -165,24 +167,21 @@ namespace WeatherMetricsWebAPI.Controllers
             finally
             {
 
-               
-
-
+              
             }
     
- 
         }
 
         [ActionName("Get")]
         [HttpGet("api/[controller]/[action]/{startDate}/{endDate}")]
-        public IActionResult GetWeatherMetricsDataRange(DateTime startDate, DateTime endDate) {
+        public async Task<ActionResult<IEnumerable<WeatherMetricsLogDTO>>> GetWeatherMetricsDataRange(DateTime startDate, DateTime endDate) {
 
             IEnumerable<WeatherMetricsLogDTO>? weatherMetricsLogDTOs = null;
 
             try
             {
                 
-                weatherMetricsLogDTOs = _weatherMetricsDataService.GetWeatherMetricsData(startDate, endDate);
+                weatherMetricsLogDTOs = await _weatherMetricsDataService.GetWeatherMetricsData(startDate, endDate);
 
                 _logger.LogInformation("WeatherMetricsController::GetWeatherMetricsDataRange Success");
 
@@ -211,7 +210,7 @@ namespace WeatherMetricsWebAPI.Controllers
 
         [ActionName("Get")]
         [HttpGet("api/[controller]/[action]")]
-        public IActionResult GetWeatherMetricsAll()
+        public async Task<ActionResult<IEnumerable<WeatherMetricsLogDTO>>> GetWeatherMetricsAll()
         {
 
             IEnumerable<WeatherMetricsLogDTO>? weatherMetricsLogDTOs = null;
@@ -219,7 +218,7 @@ namespace WeatherMetricsWebAPI.Controllers
             try
             {
 
-                weatherMetricsLogDTOs = _weatherMetricsDataService.GetWeatherMetricsData();
+                weatherMetricsLogDTOs = await _weatherMetricsDataService.GetWeatherMetricsData();
 
 
                 _logger.LogInformation("WeatherMetricsController::GetWeatherMetricsAll Success");
@@ -248,7 +247,7 @@ namespace WeatherMetricsWebAPI.Controllers
 
         [ActionName("GetAPIVersion")]
         [HttpGet("api/[controller]/[action]")]
-        public IActionResult GetAPIVersion()
+        public ActionResult<float> GetAPIVersion()
         {
             try
             {

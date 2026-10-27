@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using WeatherMetricsDTO.DTO;
 using WeatherMetricsModel.Models;
 using WeatherMetricsWebAPI.Controllers;
@@ -36,12 +38,14 @@ namespace WeatherMetricsUnitTest
 
 
             [Fact]
-            public void GetWeatherMetricsData_WeatherMetricsLogDTOList()
+            public async Task GetWeatherMetricsData_WeatherMetricsLogDTOList()
             {
 
 
+                // Instance of Mock Service - Mock of IWeatherMetricsDataService
                 var mockService = new Mock<IWeatherMetricsDataService>();
 
+                // Setup Mock Data for Mock Service Method to return
                 List<WeatherMetricsLogDTO> weatherMetricsLogDTOs = new List<WeatherMetricsLogDTO>() {
 
                 new WeatherMetricsLogDTO
@@ -82,8 +86,13 @@ namespace WeatherMetricsUnitTest
                 };
 
 
-                // Setup The Moq Service Call
-                mockService.Setup(ms => ms.GetWeatherMetricsData()).Returns(weatherMetricsLogDTOs);
+                // Setup Behavior of Moq Service Method - IWeatherMetricsDataService::GetWeatherMetricsData 
+
+                //mockService.Setup(ms => ms.GetWeatherMetricsData()).Returns<WeatherMetricsLogDTO>(weatherMetricsLogDTOs);
+                // mockService.Setup(ms => ms.GetWeatherMetricsData()).Returns(Task.FromResult<IEnumerable<WeatherMetricsLogDTO>>(weatherMetricsLogDTOs));
+
+                mockService.Setup(ms => ms.GetWeatherMetricsData()).Returns(Task.FromResult((IEnumerable<WeatherMetricsLogDTO>)weatherMetricsLogDTOs));
+
 
                 var logger = NullLogger<WeatherMetricsController>.Instance;
 
@@ -91,41 +100,33 @@ namespace WeatherMetricsUnitTest
                 // 1. Create the mock configuration
                 var mockConfig = new Mock<IConfiguration>();
 
-
-
                 // 2. Setup the specific configuration key route Mock
                 mockConfig.Setup(c => c["AppSettings:WebAPIVersion"]).Returns("2.0");
 
 
                 // Inject the mock object (.Object) into the controller's constructor
+                // This Replaces The Default Dependecy Injected WeatherMetricsDataService with Mock Service
 
                 var controller = new WeatherMetricsController(logger, mockService.Object, mockConfig.Object);
 
-                IActionResult actionResult = controller.GetWeatherMetricsAll();
 
-                var objectResult = actionResult as OkObjectResult;
+                // Now Call Controller Method which calls GetWeatherMetricsData but now it's the Mock Version
+                ActionResult<IEnumerable<WeatherMetricsLogDTO>> actionResult = await controller.GetWeatherMetricsAll();
 
+               
+                var actionResuktOKResult = actionResult.Result as Microsoft.AspNetCore.Mvc.OkObjectResult;
+                List<WeatherMetricsLogDTO>? weatherMetricsLogDTOResults = null;
 
-                IEnumerable<WeatherMetricsLogDTO>? weatherMetricsLogDTOResults = objectResult?.Value as IEnumerable<WeatherMetricsLogDTO>;
+                if (actionResuktOKResult != null && actionResuktOKResult.Value != null ) { 
 
+                    weatherMetricsLogDTOResults = actionResuktOKResult.Value as List<WeatherMetricsLogDTO>;
+
+                }
 
                 Assert.NotNull(weatherMetricsLogDTOResults);
 
 
             }
-
-            
-            
-
-            
-            
-
-            
-
-         
-
-
-
         }
     }
 }
