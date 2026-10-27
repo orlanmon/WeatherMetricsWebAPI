@@ -8,7 +8,7 @@ This Web API Also Support ASP.NET CORE Application Logs which can be viewed in t
 
 This Web API also uses an Azure Key Vault for accessing Database Connection 
 
-This Web API also has an xUnit.net Unit Testing Project Using Moq.
+This Web API uses a xUnit.net Unit Testing Project Using Moq.
 
 
 
