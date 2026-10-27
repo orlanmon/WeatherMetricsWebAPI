@@ -6,5 +6,11 @@ This ASP.NET CORE MVC RESTful Web Service has been deployed to an Azure App Serv
 
 This Web API Also Support ASP.NET CORE Application Logs which can be viewed in the App Service Monitoring Log Stream.  Simply enable App Services Logging in the App Service Monitoring Menu.
 
+This Web API also uses an Azure Key Vault for accessing Database Connection 
+
+This Web API also has an xUnit.net Unit Testing Project Using Moq.
+
+
+
 
 
