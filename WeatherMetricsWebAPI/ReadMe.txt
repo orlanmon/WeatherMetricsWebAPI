@@ -48,27 +48,22 @@ Toggle Application Logging (Filesystem) to On (this is for temporary debugging a
 You can then view the logs in real-time by selecting the Log stream option under Monitoring in the Azure portal. 
 
 
+// Notes regarding async await, more reading needs to be done to better understand innerworkings 
+
+
+The State Machine solves this by introducing a "pause and resume" mechanism. It tracks exactly where a method is paused,
+preserves its variables, and frees up the current thread to do other work. 
+When the background job completes, the state machine restores the context and resumes executing the rest of the method
+
 
 
 
 // Deployment of Web Service as Azure App Service 
 
-DEV Slot URI
-
-https://weathermetricswebapi-dev-b8g6a2ecfbewhxcu.canadaeast-01.azurewebsites.net/swagger/index.html
-
-
 
 Default Production Slot URI ( slot created automaically )
 
-https://weathermetricswebapi-e4gvgrg3g3cncgd7.canadaeast-01.azurewebsites.net/swagger/index.html
 
-
-
-// Add Keyvault Support to App Service Using CLI
-
-
-https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal
 
 
 // Deployment of Web Service to Azure App Service with Azure DevOps
@@ -77,12 +72,38 @@ https://learn.microsoft.com/en-us/azure/key-vault/general/quick-create-portal
 https://dev.azure.com/monacos
 
 
+// Production App Service End Point:  
+
+https://weathermetricswebapi-e4gvgrg3g3cncgd7.westus3-01.azurewebsites.net
 
 
+// Test Swagger Interface
+
+https://weathermetricswebapi-e4gvgrg3g3cncgd7.westus3-01.azurewebsites.net/swagger/index.html
+
+
+
+
+
+// Azure DEV/OPS CI/CD  Pipeline
+
+// Azure DevOps YAML pipeline follows a strict hierarchical nesting system: Trigger → Stages → Jobs → Steps → Tasks
+// An Azure YAML pipeline does not require stages or jobs because Azure Pipelines supports implicit structures for simple workflows
+// Trigger -> Steps -> Tasks for my Azure Deployments
+
+
+// Note For Unit Testing!
+
+The VSTest@2 runner does not understand xUnit natively. It relies on a Visual Studio test adapter to find the tests inside your compiled code.
+Ensure your xUnit test project .csproj includes the following NuGet packages:
+• xunit (The testing framework)
+• Microsoft.NET.Test.Sdk (Allows execution)
+• xunit.runner.visualstudio
 
 
 
 // YAML
+
 
 # ASP.NET Core (.NET Framework)
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
@@ -129,12 +150,6 @@ steps:
     SlotName: 'production'
     packageForLinux: '$(build.artifactStagingDirectory)\WebApp.zip'
     #packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-
-
-
-
-
-
 
 
 

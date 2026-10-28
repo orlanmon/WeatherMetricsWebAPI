@@ -17,10 +17,6 @@ using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext
 namespace WeatherMetricsUnitTest
 {
 
-
-
-
-
     public class Startup
     {
 
@@ -115,6 +111,7 @@ namespace WeatherMetricsUnitTest
 
                
                 var actionResuktOKResult = actionResult.Result as Microsoft.AspNetCore.Mvc.OkObjectResult;
+
                 List<WeatherMetricsLogDTO>? weatherMetricsLogDTOResults = null;
 
                 if (actionResuktOKResult != null && actionResuktOKResult.Value != null ) { 
