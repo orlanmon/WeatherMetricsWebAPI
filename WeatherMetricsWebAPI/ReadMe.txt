@@ -178,4 +178,35 @@ steps:
 
 
 
+// Note Example For YAML with Stages, Jobs, Steps, Task For Future Reference
+
+
+yaml
+trigger:
+  - main
+
+stages:
+  - stage: Build
+    displayName: 'Build Stage'
+    jobs:
+      - job: BuildJob
+        steps:
+          - script: echo "Building application..."
+
+  - stage: Test
+    displayName: 'Test Stage'
+    dependsOn: Build # Waits for Build to finish
+    jobs:
+      - job: TestJob
+        steps:
+          - script: echo "Running tests..."
+
+  - stage: Deploy
+    displayName: 'Deploy Stage'
+    dependsOn: Test # Waits for Test to finish
+    jobs:
+      - job: DeployJob
+        steps:
+          - script: echo "Deploying to production..."
+
 
